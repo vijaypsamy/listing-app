@@ -1,0 +1,20 @@
+version: '3'
+
+networks:
+  listingapp:
+
+services:
+
+  accomodation-listing-service:
+    container_name: accomodation-listing-service
+    image: listing-app/accomodation-listing-service:v1
+    environment:
+            NATS_SERVER_URL: nats-server:4222
+            MONGODB_URL: mongodb:27017
+            MONGODB_USERNAME: root
+            MONGODB_PASSWORD: example
+            MONGODB_NAME: itemsdb
+
+    working_dir: /accomodation-listing-service
+    networks:
+      - listingapp

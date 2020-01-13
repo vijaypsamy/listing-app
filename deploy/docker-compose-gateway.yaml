@@ -1,0 +1,18 @@
+version: '3'
+
+networks:
+  listingapp:
+
+services:
+
+  gateway:
+    container_name: gateway
+    image: listing-app/gateway:v1
+    environment:
+            NATS_SERVER_URL: nats-server:4222
+
+    working_dir: /gateway
+    networks:
+      - listingapp
+    ports:
+      - '3000:3000'

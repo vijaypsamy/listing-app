@@ -5,8 +5,9 @@ RUN yum install curl -y && \
      yum install -y nodejs
 
 
-RUN mkdir /gateway
-COPY  ./* /
-RUN cd /gateway && npm install
+RUN mkdir -p /accomodation-listing-service
+COPY  ./ /accomodation-listing-service/
+RUN cd /accomodation-listing-service && npm install
+WORKDIR /accomodation-listing-service
 ENTRYPOINT ["npm","start"]
 

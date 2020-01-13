@@ -6,7 +6,8 @@ RUN yum install curl -y && \
 
 
 RUN mkdir -p /gateway
-COPY  ./* /
+COPY  ./ /gateway/
 RUN cd /gateway && npm install
+WORKDIR /gateway
 ENTRYPOINT ["npm","start"]
 

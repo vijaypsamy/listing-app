@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const body_parser = require('body-parser');
+const NATS = require('nats');
 
-var NATS = require('nats');
-var url = "nats://localhost:4222"
+var natsurl = process.env.NATS_SERVER_URL;
+
+console.log(`${natsurl}`)
+var url = `nats://${natsurl}`
 
 var subject = "accomodate.get";
 var max = 2;

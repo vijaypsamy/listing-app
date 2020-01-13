@@ -1,12 +1,20 @@
 let mongoose = require('mongoose')
 
-const server = 'localhost:27017'
-const database = 'itemsdb'
-const user = 'admin'
-const password = '******'
+const server = process.env.MONGODB_URL
+const database = process.env.MONGODB_NAME
+const user = process.env.MONGODB_USERNAME
+const password = process.env.MONGODB_PASSWORD
 
-mongoose.set('useCreateIndex', true)
-mongoose.connect('mongodb://localhost:27017/itemsdb', {newUrlParser: true})
+mongoose.connect(`mongodb://${server}/${database}?authSource=admin`, {
+    useNewUrlParser: true,
+    user: `${user}`,
+    pass: `${password}`
+}).then(() => {
+    console.log('successfully connected to the database');
+}).catch(err => {
+    console.log('error connecting to the database');
+    process.exit();
+});
 
 var locationSchema = new mongoose.Schema({
           city: {

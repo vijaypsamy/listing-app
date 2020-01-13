@@ -1,12 +1,14 @@
 var mongoOp = require("./schema");
 
 
-'use strict'
+//'use strict'
 
 const nats = require('nats')
-
 const body_parser = require('body-parser');
-const url = "nats://localhost:4222"
+
+var natsurl = process.env.NATS_SERVER_URL;
+var url = `nats://${natsurl}`
+
 const subgetlisting = "accomodate.get"
 const subcreatelisting = "accomodation.create"
 const nc = nats.connect({url: url, json: true})
@@ -31,7 +33,6 @@ nc.on('connect', () => {
 	        d = data	    
                 msg = {"error" : false,"message" : "success"};
             }
-	      console.log(data[0].name)
 	    nc.publish(reply,JSON.stringify(data))
         });
 

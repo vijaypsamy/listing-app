@@ -1,0 +1,17 @@
+version: '3'
+
+networks:
+   listingapp:
+
+
+services:
+  nats-server:
+    container_name: nats-server
+    image: nats
+    restart: always
+    ports:
+       - '4222:4222'     
+       - '6222:6222'
+       - '8222:8222'
+    networks:
+      - listingapp
