@@ -1,0 +1,12 @@
+{
+    "name": "accomodation-listing-service",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "nats": "^1.3.2",
+        "mongoose": "^5.8.7"
+    }
+}
