@@ -1,38 +1,64 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "TTND AWS CloudFormation template to launch first instance",
+  "Description": "CF Template for listing-app",
   "Parameters": {
     "KeyName": {
       "Description": "EC2 Key Pair for SSH Access",
       "Default": "ec2key",
       "Type": "String"
+    },
+    "ImageId": {
+      "Description": "AMI ID for creating EC2 instance",
+      "Default": "ami-0520e698dd500b1d1",
+      "Type": "String"
+    },
+    "InstanceType": {
+      "Description": "EC2 instance capacity",
+      "Default": "t2.micro",
+      "Type": "String"
+    },
+    "SubnetId": {
+      "Description": "AWS Subnet to deploy EC2 instance",
+      "Default": "t2.micro",
+      "Type": "String"
+    },
+    "VpcId": {
+      "Description": "AWS Subnet to deploy EC2 instance",
+      "Type": "String"
     }
   },
   "Resources": {
-    "Instance": {
+    "AppServer": {
       "Type": "AWS::EC2::Instance",
       "Properties": {
         "KeyName": {
           "Ref": "KeyName"
         },
-        "AvailabilityZone": "us-east-2b",
-        "InstanceType": "t2.micro",
-        "ImageId": "ami-0520e698dd500b1d1",
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "ImageId": {
+          "Ref": "ImageId"
+        },
         "NetworkInterfaces": [
           {
             "DeviceIndex": "0",
             "AssociatePublicIpAddress": "true",
             "DeleteOnTermination": "true",
-            "SubnetId": "subnet-4f82df35",
+            "SubnetId": {
+          "Ref": "SubnetId"
+        },
             "GroupSet": [
-              "sg-0121b9020e9f50a22"
+              {
+                "Ref": "AppSG"
+              }
             ]
           }
         ],
         "Tags": [
           {
             "Key": "Name",
-            "Value": "ListingAppServer"
+            "Value": "AppServer"
           }
         ],
         "UserData": {
@@ -44,27 +70,85 @@
                 "touch /tmp/something\n",
                 "yum -y install python36 python3-pip git\n",
                 "pip3 install ansible\n",
-				"groupadd docker && usermod -aG docker ec2-user\n",
+                "groupadd docker && usermod -aG docker ec2-user\n",
 				"echo -e \"-----BEGIN OPENSSH PRIVATE KEY-----\\n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\\n-----END OPENSSH PRIVATE KEY-----\" > /home/ec2-user/.ssh/id_rsa\n",
-				"chown ec2-user:ec2-user /home/ec2-user/.ssh/id_rsa && chmod 600 /home/ec2-user/.ssh/id_rsa\n",
-				"cp /home/ec2-user/.ssh/id_rsa /root/.ssh/\n",
-				"mkdir -p /apps/opt/listing-app/ && chown ec2-user:ec2-user /apps/opt/listing-app\n",
-				"GIT_SSH_COMMAND=\"ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no\" git clone git@github.com:vijaypsamy/listing-app.git /apps/opt/listing-app/\n",
-				"chown -R ec2-user:ec2-user /apps/opt/listing-app\n",
-				"cd /apps/opt/listing-app/ansible-playbook && ansible-playbook main.yaml --verbose"
-				
+                "chown ec2-user:ec2-user /home/ec2-user/.ssh/id_rsa && chmod 600 /home/ec2-user/.ssh/id_rsa\n",
+                "cp /home/ec2-user/.ssh/id_rsa /root/.ssh/\n",
+                "mkdir -p /apps/opt/listing-app/ && chown ec2-user:ec2-user /apps/opt/listing-app\n",
+                "GIT_SSH_COMMAND=\"ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no\" git clone git@github.com:vijaypsamy/listing-app.git /apps/opt/listing-app/\n",
+                "chown -R ec2-user:ec2-user /apps/opt/listing-app\n",
+                "cd /apps/opt/listing-app/ansible-playbook && ansible-playbook main.yaml --verbose"
               ]
             ]
           }
         }
       }
+    },
+    "AppSG": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "App Security group",
+        "VpcId": {
+          "Ref": "VpcId"
+        },
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "22",
+            "ToPort": "22",
+            "CidrIp": "0.0.0.0/0",
+            "Description": "SSH port"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "3000",
+            "ToPort": "3000",
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Application HTTP port"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "27017",
+            "ToPort": "27017",
+            "CidrIp": "0.0.0.0/0",
+            "Description": "MongoDB port"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "AppSG"
+          }
+        ]
+      }
     }
   },
   "Outputs": {
     "InstanceId": {
-      "Description": "Listing App server",
+      "Description": "Public IP of AppServer - ",
       "Value": {
-        "Ref": "Instance"
+        "Fn::GetAtt": [
+          "AppServer",
+          "PublicIp"
+        ]
+      }
+    },
+    "WebUrl": {
+      "Description": "Access the application using this URL - ",
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "http://",
+            {
+              "Fn::GetAtt": [
+                "AppServer",
+                "PublicIp"
+              ]
+            },
+            ":3000"
+          ]
+        ]
       }
     }
   }
