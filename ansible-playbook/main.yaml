@@ -1,0 +1,9 @@
+---
+
+- hosts: 127.0.0.1
+  tasks:
+   - include: ./playbooks/server-setup.yaml
+     tags: server-setup
+
+   - include: ./playbooks/deploy-all-svc.yaml
+     tags: deploy-all-svc
