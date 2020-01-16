@@ -1,13 +1,13 @@
 version: '3'
 
 networks:
-  listingapp:
+    listingapp:
 
 services:
 
   gateway:
     container_name: gateway
-    image: listing-app/gateway:v1
+    image: listing-app/gateway:${version}
     restart: always
     environment:
             NATS_SERVER_URL: nats-server:4222

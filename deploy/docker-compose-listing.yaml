@@ -7,7 +7,7 @@ services:
 
   accomodation-listing-service:
     container_name: accomodation-listing-service
-    image: listing-app/accomodation-listing-service:v1
+    image: listing-app/accomodation-listing-service:${version}
     environment:
             NATS_SERVER_URL: nats-server:4222
             MONGODB_URL: mongodb:27017
