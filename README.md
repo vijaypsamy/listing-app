@@ -6,6 +6,7 @@ User -->  App Server --> gateway svc -->  nats-server  -->  accomodation-listing
 
 Considerations - 
 
+Gateway, nats-server, listing svc and mongodb run on Docker.
 For demo purpose both the app and build server are in 1 EC2 instance.
 Build/deploy is implemented in Ansible to demonstrate concepts instead of an automation setup such as Jenkins.
 
