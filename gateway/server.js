@@ -14,10 +14,10 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: "Customer API",
-      description: "Customer API Information",
+      title: "Listing API",
+      description: "Get or Create accomodation listings.",
       contact: {
-        name: "Amazing Developer"
+        name: "vijaypsamy@gmail.com"
       },
       servers: ["http://localhost:80"]
     }

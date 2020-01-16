@@ -12,7 +12,7 @@ const nc = nats.connect({url: url, json: true})
 
 nc.on('connect', () => {
   const opts = {}
-
+// NATS subscription for request/reply - get all accomodation listings
   nc.subscribe(subgetlisting, opts, (msg, reply) => {
 
     if (reply) {
@@ -31,6 +31,7 @@ nc.on('connect', () => {
     console.log('Dropping message "' + msg + '" - no reply subject set')
   })
 
+// NATS subscription for creating new listing
   nc.subscribe(subcreatelisting, opts, (msg, reply)  => {
 
       var db = new mongoOp(msg);

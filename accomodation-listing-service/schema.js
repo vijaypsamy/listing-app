@@ -51,7 +51,15 @@ var locationSchema = new mongoose.Schema({
 let AccomodationSchema = new mongoose.Schema({
   name: {
           type: String,
-          required: [true, "Please provide a name"]
+	  validate: {
+            validator: function(v) {
+                    if(this.category === 'hotel'){
+		    return !v.includes("Free") && !v.includes("Offer") && !v.includes("Book") && !v.includes("Website") ;
+		    } else return true;
+                 },
+	         message: 'Give a different name please.'},
+          required: [true, "Please provide a name"],
+	  minlength: 11
           },
 
   rating: {

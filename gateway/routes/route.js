@@ -19,7 +19,7 @@ var subject = "accomodate.get";
  *    description: Check if app is running
  *    responses:
  *      '200':
- *        description: A successful response
+ *        description: Success response - Hotel? Trivago! 
  */
 
 
@@ -86,7 +86,7 @@ router.route("/accomodations")
  * /accomodations:
  *   post:
  *      requestBody:
- *        description: Optional description in *Markdown*
+ *        description: Create an accomodation listing
  *        required: true
  *        content: 
  *          application/json:
@@ -95,7 +95,7 @@ router.route("/accomodations")
  *                type: String
  *      responses:
  *        200:
- *         description: Successfully posted a create request!
+ *         description: Successfully posted create request to application.
  */
    .post(function(req,res){
         

@@ -5,7 +5,7 @@
 
 - name: Deploy gateway, accomodation-listing-service, nats-server, mongodb
   shell: |
-          docker-compose -f ../deploy/docker-compose-mongo.yaml up -d
-          docker-compose -f ../deploy/docker-compose-nats-server.yaml up -d
-          docker-compose -f ../deploy/docker-compose-listing.yaml up -d
-          docker-compose -f ../deploy/docker-compose-gateway.yaml up -d
+          version=v1 docker-compose -f ../deploy/docker-compose-mongo.yaml up -d
+          version=v1 docker-compose -f ../deploy/docker-compose-nats-server.yaml up -d
+          version=v1 docker-compose -f ../deploy/docker-compose-listing.yaml up -d
+          version=v1 docker-compose -f ../deploy/docker-compose-gateway.yaml up -d
