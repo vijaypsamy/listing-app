@@ -1,5 +1,11 @@
 Welcome to the demo accomodation listing app!
 
+Application flow - 
+
+User -->  App Server --> gateway svc -->  nats-server  -->  accomodation-listing-service  -->  mongodb  (data stored on server)
+         ------------                    ---------------------------------------------------------------
+	 EC2 instance			                          Docker containers
+
 **IMPORTANT - Please read notes bottom of page before starting!**
 
 Lets start off with the pre-requisites needed setup the application. And then see how to set it up.
