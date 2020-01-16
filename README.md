@@ -38,30 +38,30 @@ There are 2 ways to setup the application -
 	
 2. Execute a Cloudformation template
 
-```bash
-      aws cloudformation create-stack --template-body file:\\<path-to-cft.json> --stack-name <stack-name>
-```
+   ```bash
+    aws cloudformation create-stack --template-body file:\\<path-to-cft.json> --stack-name <stack-name>
+   ```
 	
     Example - When in repo's cft directory, in Windows -
 
-```bash
-      aws cloudformation create-stack --template-body file:\\cft.json --stack-name listing-app-stack01
-```
+   ```bash
+    aws cloudformation create-stack --template-body file:\\cft.json --stack-name listing-app-stack01
+   ```
 
 3. Wait for 6-7 minutes after the EC2 instance's 2/2 checked have passed so that the bootstrap script completes.
 	Alternatively, in the EC2 instance you can tail this file to check progress of the bootstrap script - 
 	
-```bash
-	cat /var/log/cloud-init-output.log
-```
+   ```bash
+    cat /var/log/cloud-init-output.log
+   ```
 	
 4. Check if 4 containers are running - 
 
    gateway, accomodation-listing-service, nats-server and mongodb
   
-```bash
-        docker ps
-```
+   ```bash
+    docker ps
+   ```
 	
 Thats it! Scroll below on how to access application.
 
@@ -75,9 +75,9 @@ If you already have a Linux server to setup application in, follow below steps.
 
 2. Switch to repo's "ansible-playbooks" directory and run - 
 
-```bash
-	ansible-playbook main.yaml --tags "deploy-all-svc" --verbose
-```
+   ```bash
+    ansible-playbook main.yaml --tags "deploy-all-svc" --verbose
+   ```
 
    Done! Scroll below on how to access application
 
@@ -97,18 +97,18 @@ If you already have a Linux server to setup application in, follow below steps.
 
    Sample request body: *application/json*
    
-```bash
-   {
-  "name": "Vijay Anand",
-  "rating": 5,
-  "category": "guesthouse",
-  "location": {
-    "city": "Chennai",
-    "state": "Tamil Nadu",
-    "country": "India",
-    "zip_code": "600020",
-    "address": "Old no. 6/1, Venkateswara Nagar, Adyar, Chennai"
-     },
-  "image": "https://google.com"
-  }
-```
+   ```bash
+     {
+    "name": "Vijay Anand",
+    "rating": 5,
+    "category": "guesthouse",
+    "location": {
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "country": "India",
+      "zip_code": "600020",
+      "address": "Old no. 6/1, Venkateswara Nagar, Adyar, Chennai"
+       },
+    "image": "https://google.com"
+    }
+   ```
