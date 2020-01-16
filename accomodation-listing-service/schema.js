@@ -1,4 +1,5 @@
 let mongoose = require('mongoose')
+let urlExists = require('url-exists');
 
 const server = process.env.MONGODB_URL
 const database = process.env.MONGODB_NAME
@@ -50,7 +51,7 @@ var locationSchema = new mongoose.Schema({
 let AccomodationSchema = new mongoose.Schema({
   name: {
           type: String,
-          required: [true, "Please provide a name"],
+          required: [true, "Please provide a name"]
           },
 
   rating: {
@@ -64,19 +65,24 @@ let AccomodationSchema = new mongoose.Schema({
 
   category: {
           type: String,
-          enum: ['Hotel','Motel','Private Property'],
-          required: [true]
+          enum: ['hotel', 'alternative', 'hostel', 'lodge', 'resort', 'guesthouse'],
+          required: [true, 'Please enter a valid category, one of - hotel, alternative, hostel, lodge, resort or guesthouse']
   },
 
   location: {
-	  
-	  type: locationSchema,
-	  required: true
-	  
-	  
-  }
-  
-});
-  
 
+          type: locationSchema,
+          required: true
+
+
+  },
+  
+  image: {
+          type: String,
+          match: [/((http|https):\/\/)?[a-zA-Z]\w*(\.\w+)+(\/\w*(\.\w+)*)*(\?.+)*/,'Please enter a valid URL'],
+          required: [true, 'Please enter an image URL']
+         }
+ }); 
+ 
 module.exports = mongoose.model('Accomodations', AccomodationSchema)
+
