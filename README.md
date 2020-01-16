@@ -3,8 +3,11 @@ Welcome to the demo accomodation listing app!
 Application flow - 
 
 User -->  App Server --> gateway svc -->  nats-server  -->  accomodation-listing-service  -->  mongodb  (data stored on server)
-         ------------                    ---------------------------------------------------------------
-	 EC2 instance			                          Docker containers
+
+Considerations - 
+
+For demo purpose both the app and build server are in 1 EC2 instance.
+Build/deploy is implemented in Ansible to demonstrate concepts instead of an automation setup such as Jenkins.
 
 **IMPORTANT - Please read notes bottom of page before starting!**
 
