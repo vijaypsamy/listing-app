@@ -19,10 +19,9 @@ const swaggerOptions = {
       contact: {
         name: "Amazing Developer"
       },
-      servers: ["http://localhost:3000"]
+      servers: ["http://localhost:80"]
     }
   },
-  // ['.routes/*.js']
   apis: ["./routes/route.js"]
 };
 
@@ -36,6 +35,6 @@ app.use('/', itemsRouter);
 
 
 app.listen(port, () => {
-  console.log(`running at port ${port}`);
+  console.log(` gateway service running at port ${port}`);
 });
 

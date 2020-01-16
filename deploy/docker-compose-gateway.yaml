@@ -8,6 +8,7 @@ services:
   gateway:
     container_name: gateway
     image: listing-app/gateway:v1
+    restart: always
     environment:
             NATS_SERVER_URL: nats-server:4222
 
@@ -15,4 +16,4 @@ services:
     networks:
       - listingapp
     ports:
-      - '3000:3000'
+      - '80:3000'

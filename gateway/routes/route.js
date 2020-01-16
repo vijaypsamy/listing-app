@@ -9,7 +9,6 @@ console.log(`${natsurl}`)
 var url = `nats://${natsurl}`
 
 var subject = "accomodate.get";
-var max = 2;
 
  
  // Routes
@@ -47,36 +46,38 @@ router.route("/")
 
 router.route("/accomodations")
     .get(function(req,res){
-        var msg = {};
 	var response = {};
+
         var nc = NATS.connect({url: url, json: true});	
-        
 
-	    console.log("1")
+        nc.on('connect', function () {
 
-        nc.request(subject, {"op": "get"}, {
-          max: max
-        }, (msg) => {
-	  response = JSON.parse(msg)
-	  console.log("2")
-          console.log('Received: ' + msg)
-	 console.log("Response"+ response)
+           nc.request(subject, {"op": "get"}, {
+		      max: 1, timeout: 5000
+		   }, (msg) => {
 
-	res.json(response)
-        })
+             if (msg instanceof NATS.NatsError && msg.code === NATS.REQ_TIMEOUT) {
+               
+		  console.log('request timed out')
+		  res.json({"status":"reqeust timed out"})
+
+                 } else {
+	           response = JSON.parse(msg)
+                   res.json(response) 
+                 }
+             })
         
-        nc.on('unsubscribe', () => {
-          process.exit()
-        })
+       })
         
-        nc.on('error', (e) => {
-          console.log('Error [' + nc.currentServer + ']: ' + e)
-          process.exit()
-        })	    
-       
-//	res.json(response)
+       nc.on('error', (e) => {
+
+         console.log('Failed to connect to nats-server.')
+         res.json({"status":"failed - try again"}) 
+          
+        })	   
 
     })
+
 
 
 /**
@@ -99,42 +100,19 @@ router.route("/accomodations")
    .post(function(req,res){
         
         var nc = NATS.connect(url,{json: true});  
-        nc.publish("accomodation.create",req.body);
-	res.json({ stats: 'success' });
+
+       nc.on('connect', function () {
+
+               nc.publish("accomodation.create",req.body);
+	       res.json({ stats: 'success' });
+        })
+
+	nc.on('error', function(e) {
+
+	       console.log('Failed to connect to nats-server.')
+               res.json({"status":"failed - try again"})
+        });
   
-    })
-
-    .delete(function(req,res){
-
-	    mongoOp.deleteMany({}, function(err){
-
-			if(err){
-
-				response = {"error" : true,"message" : err.message};
-
-			} else {
-
-				response = {"error" : true,"message" : "All data deleted!"};
-
-			}
-		    res.json(response);
-
-	    });
-
     });
-
-router.get('/:id', function (req, res) {
-    let found = data.find(function (item) {
-        return item.id === parseInt(req.params.id);
-    });
-    if (found) {
-        res.status(200).json(found);
-    } else {
-        res.sendStatus(404);
-    }
-});
-
-
-
 
 module.exports = router;
