@@ -1,4 +1,10 @@
-# Pre-requisites
+Welcome to the demo accomodation listing app!
+
+**IMPORTANT - Please read notes bottom of page before starting!**
+
+Lets start off with the pre-requisites needed setup the application. And then see how to set it up.
+
+## Pre-requisites
 
 1. An AWS account with valid VPC and Subnet.
 2. aws cli configured in local machine with credentials to access the AWS account.
@@ -112,3 +118,8 @@ If you already have a Linux server to setup application in, follow below steps.
     "image": "https://google.com"
     }
    ```
+
+### NOTES
+
+1. The Cloudformation template contains the PRIVATE KEY of my private Github repo's deploy keypair. Only provided to automate setup from scratch for demo purpose to provide an automated flow. I am aware that anyone with the key can access my private repo on Github.com
+2. Security group opens few ports to outside world! i.e., CIDR - 0.0.0.0/0. Please edit this template to restrict to a subnet/IP if you wish to.
