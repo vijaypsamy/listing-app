@@ -80,3 +80,35 @@ If you already have a Linux server to setup application in, follow below steps.
 ```
 
    Done! Scroll below on how to access application
+
+#### Access the application - 
+
+**Swagger UI**
+
+   HTTP Method: *GET*, URL: *http://<EC2PublicIP>/api-docs*
+   
+   Get all accomodation listings (empty response until you create a listing) - 
+
+   HTTP Method: *GET*, URL: *http://<EC2PublicIP>/accomodations*
+   
+   **Create an accomodation listing**
+
+   HTTP Method: *POST*, URL: *http://<EC2PublicIP>/accomodations*
+
+   Sample request body: *application/json*
+   
+```bash
+   {
+  "name": "Vijay Anand",
+  "rating": 5,
+  "category": "guesthouse",
+  "location": {
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "zip_code": "600020",
+    "address": "Old no. 6/1, Venkateswara Nagar, Adyar, Chennai"
+     },
+  "image": "https://google.com"
+  }
+```
